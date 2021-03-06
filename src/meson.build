@@ -1,18 +1,18 @@
 # freetype-gl
 freetype_gl_incdir = include_directories('./freetype-gl')
-freetype_gl_sources = [
-    './freetype-gl/distance-field.c',
-    './freetype-gl/edtaa3func.c',
-    './freetype-gl/font-manager.c',
-    './freetype-gl/makefont.c',
-    './freetype-gl/platform.c',
-    './freetype-gl/text-buffer.c',
-    './freetype-gl/texture-atlas.c',
-    './freetype-gl/texture-font.c',
-    './freetype-gl/vector.c',
-    './freetype-gl/vertex-attribute.c',
-    './freetype-gl/vertex-buffer.c'
-]
+freetype_gl_sources = files(
+    'freetype-gl/distance-field.c',
+    'freetype-gl/edtaa3func.c',
+    'freetype-gl/font-manager.c',
+    'freetype-gl/makefont.c',
+    'freetype-gl/platform.c',
+    'freetype-gl/text-buffer.c',
+    'freetype-gl/texture-atlas.c',
+    'freetype-gl/texture-font.c',
+    'freetype-gl/vector.c',
+    'freetype-gl/vertex-attribute.c',
+    'freetype-gl/vertex-buffer.c'
+)
 freetype_gl_deps = [
     dependency('glfw3'),
     dependency('fontconfig'),
