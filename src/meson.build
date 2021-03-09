@@ -1,3 +1,5 @@
+cc = meson.get_compiler('c')
+
 # freetype-gl
 freetype_gl_incdir = include_directories('./freetype-gl')
 freetype_gl_sources = files(
@@ -14,7 +16,7 @@ freetype_gl_sources = files(
     'freetype-gl/vertex-buffer.c'
 )
 freetype_gl_deps = [
-    dependency('glfw3'),
+    dependency('glfw3', fallback: ['glfw']),
     dependency('fontconfig'),
     dependency('freetype2'),
     dependency('harfbuzz'),
@@ -30,7 +32,15 @@ freetype_gl_dep = declare_dependency(
     link_with : freetype_gl,
     sources : freetype_gl_sources)
 
+# You need linkder for linux
+if host_machine.system() == 'linux'
+    dl_dep = cc.find_library('dl', required: false)
+else
+    dl_dep = dependency('', required: false)
+endif
+
 deps = [
+     dl_dep,
      dependency('glfw3'),
      dependency('gl'),
      freetype_gl_deps,
