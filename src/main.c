@@ -1,183 +1,415 @@
-#include <glad/glad.h>
+#if defined(__APPLE__)
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
+// Triangle with vertex-buffer
+#include <stdio.h>
+#include <string.h>
+
+#include "mat4.h"
+#include "shader.h"
+#include "vertex-buffer.h"
 
 #include <GLFW/glfw3.h>
 
-#include <stdio.h>
+// ------------------------------------------------------- global variables ---
+GLuint shader;
+vertex_buffer_t *cube;
+mat4 model, view, projection;
 
-void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-void processInput(GLFWwindow *window);
+// ------------------------------------------------------------------- init ---
+void init(void) {
+  typedef struct {
+    float x, y, z;
+  } xyz;
+  typedef struct {
+    float r, g, b, a;
+  } rgba;
+  typedef struct {
+    xyz position;
+    rgba color;
+  } vertex;
 
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+  rgba c[] = {{1, 1, 1, 1}, {1, 1, 0, 1}, {1, 0, 1, 1}, {0, 1, 1, 1},
+              {1, 0, 0, 1}, {0, 0, 1, 1}, {0, 1, 0, 1}, {0, 0, 0, 1}};
 
-const char *vertexShaderSource =
-    "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
-const char *fragmentShaderSource =
-    "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-    "}\n\0";
-
-int main() {
-  // glfw: initialize and configure
-  // ------------------------------
-  glfwInit();
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-#ifdef __APPLE__
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
-  // glfw window creation
-  // --------------------
-  GLFWwindow *window =
-      glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
-  if (window == NULL) {
-    glfwTerminate();
-    return -1;
-  }
-  glfwMakeContextCurrent(window);
-  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-  // glad: load all OpenGL function pointers
-  // ---------------------------------------
-  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    return -1;
-  }
-
-  // build and compile our shader program
-  // ------------------------------------
-  // vertex shader
-  unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-  glCompileShader(vertexShader);
-  // check for shader compile errors
-  int success;
-  char infoLog[512];
-  glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-  if (!success) {
-    glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-  }
-  // fragment shader
-  unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-  glCompileShader(fragmentShader);
-  // check for shader compile errors
-  glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-  if (!success) {
-    glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-  }
-  // link shaders
-  unsigned int shaderProgram = glCreateProgram();
-  glAttachShader(shaderProgram, vertexShader);
-  glAttachShader(shaderProgram, fragmentShader);
-  glLinkProgram(shaderProgram);
-  // check for linking errors
-  glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-  if (!success) {
-    glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-  }
-  glDeleteShader(vertexShader);
-  glDeleteShader(fragmentShader);
-
-  // set up vertex data (and buffer(s)) and configure vertex attributes
-  // ------------------------------------------------------------------
-  float vertices[] = {
-      -0.5f, -0.5f, 0.0f, // left
-      0.5f,  -0.5f, 0.0f, // right
-      0.0f,  0.5f,  0.0f  // top
+  vertex vertices[] = {
+      {{-0.5f, -0.5f, 0.0f}, c[1]}, // left
+      {{0.5f, -0.5f, 0.0f}, c[2]},  // right
+      {{0.0f, 0.5f, 0.0f}, c[3]}    // top
   };
 
-  unsigned int VBO, VAO;
-  glGenVertexArrays(1, &VAO);
-  glGenBuffers(1, &VBO);
-  // bind the Vertex Array Object first, then bind and set vertex buffer(s), and
-  // then configure vertex attributes(s).
-  glBindVertexArray(VAO);
+  GLuint indices[3] = {0, 1, 2};
 
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+  cube = vertex_buffer_new("vertex:3f,color:4f");
+  vertex_buffer_push_back(cube, vertices, 3, indices, 3);
+  shader =
+      shader_load("/Users/seungheonoh/Documents/Terminal/src/shaders/1.vert",
+                  "/Users/seungheonoh/Documents/Terminal/src/shaders/1.frag");
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-  glEnableVertexAttribArray(0);
+  glPolygonOffset(1, 1);
+  glClearColor(1.0, 1.0, 1.0, 1.0);
+  glEnable(GL_DEPTH_TEST);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_LINE_SMOOTH);
+}
 
-  // note that this is allowed, the call to glVertexAttribPointer registered VBO
-  // as the vertex attribute's bound vertex buffer object so afterwards we can
-  // safely unbind
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
+// ---------------------------------------------------------------- display ---
+void display(GLFWwindow *window) {
+  static float theta = 0, phi = 0;
+  static GLuint Color = 0;
+  double seconds_elapsed = glfwGetTime();
 
-  // You can unbind the VAO afterwards so other VAO calls won't accidentally
-  // modify this VAO, but this rarely happens. Modifying other VAOs requires a
-  // call to glBindVertexArray anyways so we generally don't unbind VAOs (nor
-  // VBOs) when it's not directly necessary.
-  glBindVertexArray(0);
+  if (!Color) {
+    Color = glGetUniformLocation(shader, "Color");
+  }
 
-  // uncomment this call to draw in wireframe polygons.
-  // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  theta = .5f * seconds_elapsed / 0.016f;
+  phi = .5f * seconds_elapsed / 0.016f;
 
-  // render loop
-  // -----------
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  glDisable(GL_BLEND);
+  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_POLYGON_OFFSET_FILL);
+
+  glUseProgram(shader);
+
+  glUniform4f(Color, 1, 1, 1, 1);
+  vertex_buffer_render(cube, GL_TRIANGLES);
+
+  glfwSwapBuffers(window);
+}
+
+// ---------------------------------------------------------------- reshape ---
+void reshape(GLFWwindow *window, int width, int height) {
+  glViewport(0, 0, width, height);
+}
+
+// --------------------------------------------------------------- keyboard ---
+void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods) {
+  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+    glfwSetWindowShouldClose(window, GL_TRUE);
+  }
+}
+
+// --------------------------------------------------------- error-callback ---
+void error_callback(int error, const char *description) {
+  fputs(description, stderr);
+}
+
+// ------------------------------------------------------------------- main ---
+int main(int argc, char **argv) {
+  GLFWwindow *window;
+  char *screenshot_path = NULL;
+
+  if (argc > 1) {
+    if (argc == 3 && 0 == strcmp("--screenshot", argv[1]))
+      screenshot_path = argv[2];
+    else {
+      fprintf(stderr, "Unknown or incomplete parameters given\n");
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  glfwSetErrorCallback(error_callback);
+
+  if (!glfwInit()) {
+    exit(EXIT_FAILURE);
+  }
+
+  glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
+  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+  window = glfwCreateWindow(400, 400, argv[0], NULL, NULL);
+
+  if (!window) {
+    glfwTerminate();
+    exit(EXIT_FAILURE);
+  }
+
+  glfwMakeContextCurrent(window);
+  glfwSwapInterval(1);
+
+  glfwSetFramebufferSizeCallback(window, reshape);
+  glfwSetWindowRefreshCallback(window, display);
+  glfwSetKeyCallback(window, keyboard);
+
+  init();
+
+  glfwShowWindow(window);
+  {
+    int pixWidth, pixHeight;
+    glfwGetFramebufferSize(window, &pixWidth, &pixHeight);
+    reshape(window, pixWidth, pixHeight);
+  }
+
+  glfwSetTime(1.0);
+
   while (!glfwWindowShouldClose(window)) {
-    // input
-    // -----
-    processInput(window);
-
-    // render
-    // ------
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    // draw our first triangle
-    glUseProgram(shaderProgram);
-    glBindVertexArray(
-        VAO); // seeing as we only have a single VAO there's no need to bind it
-              // every time, but we'll do so to keep things a bit more organized
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    // glBindVertexArray(0); // no need to unbind it every time
-
-    // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
-    // etc.)
-    // -------------------------------------------------------------------------------
-    glfwSwapBuffers(window);
+    display(window);
     glfwPollEvents();
   }
 
-  // optional: de-allocate all resources once they've outlived their purpose:
-  // ------------------------------------------------------------------------
-  glDeleteVertexArrays(1, &VAO);
-  glDeleteBuffers(1, &VBO);
-  glDeleteProgram(shaderProgram);
-
-  // glfw: terminate, clearing all previously allocated GLFW resources.
-  // ------------------------------------------------------------------
+  glfwDestroyWindow(window);
   glfwTerminate();
-  return 0;
+
+  return EXIT_SUCCESS;
 }
 
-// process all input: query GLFW whether relevant keys are pressed/released this
-// frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow *window) {
-  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    glfwSetWindowShouldClose(window, GL_TRUE);
+/*
+// Text printing
+
+#include <stdio.h>
+#include <string.h>
+
+#include "font-manager.h"
+#include "log.h"
+#include "markup.h"
+#include "shader.h"
+#include "text-buffer.h"
+#include "vertex-buffer.h"
+
+#include <GLFW/glfw3.h>
+#include <fontconfig/fontconfig.h>
+
+char *match_font_description(const char *desc) {
+#if defined(_WIN32) || defined(_WIN64)
+  die(-1, "Windows doesn't have fontconfig, too bad");
+#endif
+  char *filename = 0;
+  FcInit();
+  FcPattern *pattern = FcNameParse((const FcChar8 *)desc);
+  FcConfigSubstitute(0, pattern, FcMatchPattern);
+  FcDefaultSubstitute(pattern);
+  FcResult result;
+  FcPattern *match = FcFontMatch(0, pattern, &result);
+  FcPatternDestroy(pattern);
+
+  if (!match) {
+    die(-1, "font description not found: %s", desc);
+  } else {
+    FcValue value;
+    FcResult result = FcPatternGet(match, FC_FILE, 0, &value);
+    if (result) {
+      die(-1, "font description not found: %s", desc);
+    } else {
+      filename = strdup((char *)(value.u.s));
+    }
+  }
+  FcPatternDestroy(match);
+  return filename;
 }
 
-// glfw: whenever the window size changed (by OS or user resize) this callback
-// function executes
-// ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
-  // make sure the viewport matches the new window dimensions; note that width
-  // and height will be significantly larger than specified on retina
-  // displays.
+typedef struct {
+  float x, y, z; // pos
+  float s, t;    // texture
+  float r, g, b; // color
+} vertex;
+
+// ------------------------------------------------------- global variables ---
+GLuint shader;
+GLuint textshader;
+vertex_buffer_t *cube;
+text_buffer_t *textbuffer;
+font_manager_t *fontmanager;
+
+void init(void) {
+
+  fontmanager = font_manager_new(512, 512, LCD_FILTERING_ON);
+  textbuffer = text_buffer_new();
+
+  char *f_normal = match_font_description("IBM Plex Mono");
+  vec4 white = {{1.0, 1.0, 1.0, 1.0}};
+  vec4 none = {{1.0, 1.0, 1.0, 1.0}};
+
+  markup_t normal = {
+      .family = f_normal,
+      .size = 24.0,
+      .bold = 0,
+      .italic = 0,
+      .spacing = 0.0,
+      .gamma = 2.,
+      .foreground_color = white,
+      .background_color = none,
+      .underline = 0,
+      .underline_color = white,
+      .overline = 0,
+      .overline_color = white,
+      .strikethrough = 0,
+      .strikethrough_color = white,
+      .font = 0,
+  };
+
+  normal.font = font_manager_get_from_markup(fontmanager, &normal);
+
+  vec2 pen = {{20, 200}};
+  text_buffer_printf(textbuffer, &pen, &normal, "Thonk, Stonk", NULL);
+
+  glGenTextures(1, &fontmanager->atlas->id);
+  glBindTexture(GL_TEXTURE_2D, fontmanager->atlas->id);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, fontmanager->atlas->width,
+               fontmanager->atlas->height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+               fontmanager->atlas->data);
+
+  typedef struct {
+    float x, y, z;
+  } xyz;
+  typedef struct {
+    float r, g, b, a;
+  } rgba;
+  typedef struct {
+    xyz position;
+    rgba color;
+  } vertex;
+
+  rgba c[] = {{1, 1, 1, 1}, {1, 1, 0, 1}, {1, 0, 1, 1}, {0, 1, 1, 1},
+              {1, 0, 0, 1}, {0, 0, 1, 1}, {0, 1, 0, 1}, {0, 0, 0, 1}};
+
+  vertex vertices[] = {
+      {{-0.5f, -0.5f, 0.0f}, c[1]}, // left
+      {{0.5f, -0.5f, 0.0f}, c[2]},  // right
+      {{0.0f, 0.5f, 0.0f}, c[3]}    // top
+  };
+
+  GLuint indices[3] = {0, 1, 2};
+
+  cube = vertex_buffer_new("vertex:3f,color:4f");
+  vertex_buffer_push_back(cube, vertices, 3, indices, 3);
+  shader =
+      shader_load("/Users/SeungheonOh/Documents/Terminal/src/shaders/1.vert",
+                  "/Users/SeungheonOh/Documents/Terminal/src/shaders/1.frag");
+  textshader =
+      shader_load("/Users/SeungheonOh/Documents/Terminal/src/shaders/2.vert",
+                  "/Users/SeungheonOh/Documents/Terminal/src/shaders/2.frag");
+  glPolygonOffset(1, 1);
+  glClearColor(1.0, 1.0, 1.0, 1.0);
+  glEnable(GL_DEPTH_TEST);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_LINE_SMOOTH);
+}
+
+// ---------------------------------------------------------------- display ---
+void display(GLFWwindow *window) {
+  static float theta = 0, phi = 0;
+  static GLuint Color = 0;
+  double seconds_elapsed = glfwGetTime();
+
+  if (!Color) {
+    Color = glGetUniformLocation(shader, "Color");
+  }
+
+  theta = .5f * seconds_elapsed / 0.016f;
+  phi = .5f * seconds_elapsed / 0.016f;
+
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  glDisable(GL_BLEND);
+  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_POLYGON_OFFSET_FILL);
+
+  glUseProgram(shader);
+
+  glUniform4f(Color, 1, 1, 1, 1);
+  vertex_buffer_render(cube, GL_TRIANGLES);
+
+  // text
+  glClearColor(0.40, 0.40, 0.45, 1.00);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  glColor4f(1.00, 1.00, 1.00, 1.00);
+  glUseProgram(shader);
+  {
+    glUniform1i(glGetUniformLocation(textshader, "tex"), 0);
+    glUniform3f(glGetUniformLocation(textshader, "pixel"),
+                1.0f / fontmanager->atlas->width,
+                1.0f / fontmanager->atlas->height,
+                (float)fontmanager->atlas->depth);
+
+    glEnable(GL_BLEND);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, fontmanager->atlas->id);
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendColor(1, 1, 1, 1);
+
+    vertex_buffer_render(textbuffer->buffer, GL_TRIANGLES);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBlendColor(0, 0, 0, 0);
+    glUseProgram(0);
+  }
+
+  glfwSwapBuffers(window);
+}
+
+// ---------------------------------------------------------------- reshape ---
+void reshape(GLFWwindow *window, int width, int height) {
   glViewport(0, 0, width, height);
 }
+
+// --------------------------------------------------------------- keyboard ---
+void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods) {
+  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+    glfwSetWindowShouldClose(window, GL_TRUE);
+  }
+}
+
+// --------------------------------------------------------- error-callback ---
+void error_callback(int error, const char *description) {
+  fputs(description, stderr);
+}
+
+// ------------------------------------------------------------------- main ---
+int main(int argc, char **argv) {
+  log_info("starting");
+  GLFWwindow *window;
+  glfwSetErrorCallback(error_callback);
+
+  if (!glfwInit()) {
+    exit(EXIT_FAILURE);
+  }
+
+  glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
+  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+  window = glfwCreateWindow(400, 400, argv[0], NULL, NULL);
+
+  if (!window) {
+    glfwTerminate();
+    exit(EXIT_FAILURE);
+  }
+
+  glfwMakeContextCurrent(window);
+  glfwSwapInterval(1);
+
+  glfwSetFramebufferSizeCallback(window, reshape);
+  glfwSetWindowRefreshCallback(window, display);
+  glfwSetKeyCallback(window, keyboard);
+
+  init();
+
+  glfwShowWindow(window);
+  {
+    int pixWidth, pixHeight;
+    glfwGetFramebufferSize(window, &pixWidth, &pixHeight);
+    reshape(window, pixWidth, pixHeight);
+  }
+
+  glfwSetTime(1.0);
+
+  while (!glfwWindowShouldClose(window)) {
+    display(window);
+    glfwPollEvents();
+  }
+
+  glfwDestroyWindow(window);
+  glfwTerminate();
+
+  return EXIT_SUCCESS;
+}
+*/
