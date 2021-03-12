@@ -6,7 +6,7 @@
 #ifndef __SHADER_H__
 #define __SHADER_H__
 
-#include "opengl.h"
+#include "freetype-gl/opengl.h"
 
 #ifdef __cplusplus
 extern "C" {

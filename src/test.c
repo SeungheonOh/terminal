@@ -11,9 +11,10 @@
 
 #include "freetype-gl.h"
 #include "markup.h"
+#include "vertex-buffer.h"
+
 #include "mat4.h"
 #include "shader.h"
-#include "vertex-buffer.h"
 
 #include <GLFW/glfw3.h>
 
@@ -86,9 +87,8 @@ console_t *console_new(float font_size) {
   vec4 white = {{1, 1, 1, 1}};
   vec4 red = {{1, 0, 0, 0}};
   vec4 black = {{0, 0, 0, 1}};
-  vec4 none = {{0, 0, 1, 0}};
 
-  const char *f = "/Users/seungheonoh/Library/Fonts/IBMPlexMono-Regular.ttf";
+  char *f = "/Users/seungheonoh/Library/Fonts/IBMPlexMono-Regular.ttf";
 
   markup_t normal;
   normal.family = f;
@@ -598,16 +598,6 @@ void error_callback(int error, const char *description) {
 // ------------------------------------------------------------------- main ---
 int main(int argc, char **argv) {
   GLFWwindow *window;
-  char *screenshot_path = NULL;
-
-  if (argc > 1) {
-    if (argc == 3 && 0 == strcmp("--screenshot", argv[1]))
-      screenshot_path = argv[2];
-    else {
-      fprintf(stderr, "Unknown or incomplete parameters given\n");
-      exit(EXIT_FAILURE);
-    }
-  }
 
   glfwSetErrorCallback(error_callback);
 

@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "opengl.h"
+#include "freetype-gl/opengl.h"
 #include "shader.h"
 
 
