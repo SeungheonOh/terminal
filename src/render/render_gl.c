@@ -1,5 +1,6 @@
 #include "log.h"
 #include "render/render.h"
+#include "render/shader.h"
 
 /*
  * source from https://learnopengl.com/
@@ -30,37 +31,7 @@ static int init() {
   log_debug("gl render init");
 
   log_info("compiling shader");
-  unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-  glCompileShader(vertexShader);
-  int success;
-  char infoLog[512];
-  glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-  if (!success) {
-    glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-    log_error("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n");
-  }
-  unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-  glCompileShader(fragmentShader);
-  glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-  if (!success) {
-    glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-    log_error("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n");
-  }
-  // link shaders
-  shaderProgram = glCreateProgram();
-  glAttachShader(shaderProgram, vertexShader);
-  glAttachShader(shaderProgram, fragmentShader);
-  glLinkProgram(shaderProgram);
-  // check for linking errors
-  glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-  if (!success) {
-    glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-    log_error("ERROR::SHADER::PROGRAM::LINKING_FAILED\n");
-  }
-  glDeleteShader(vertexShader);
-  glDeleteShader(fragmentShader);
+  shaderProgram = shader_load(vertexShaderSource, fragmentShaderSource);
 
   log_info("loading vertex buffer");
   float vertices[] = {
@@ -84,7 +55,7 @@ static int init() {
 }
 
 static int draw() {
-  // log_debug("gl render draw for %d time", ++counter);
+  log_debug("gl render draw for %d time", ++counter);
   glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 

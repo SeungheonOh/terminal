@@ -7,11 +7,12 @@ render_dep = [
 
   dependency('glew'),
   dependency('fontconfig'),
-  dependency('freetype2'),  
+  dependency('freetype2'),
 ]
 
 render_src = [
   files('render_gl.c'),
+  files('shader.c'),
 ]
 
 render_inc = [
