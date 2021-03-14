@@ -1,4 +1,5 @@
 #include "log.h"
+#include "render/font/font.h"
 #include "render/render.h"
 #include "render/shader.h"
 
@@ -27,6 +28,7 @@ static unsigned int shaderProgram;
 static unsigned int VBO, VAO;
 
 static int init() {
+  fttest();
   counter = 0;
   log_debug("gl render init");
 
@@ -55,7 +57,7 @@ static int init() {
 }
 
 static int draw() {
-  log_debug("gl render draw for %d time", ++counter);
+  // log_debug("gl render draw for %d time", ++counter);
   glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 

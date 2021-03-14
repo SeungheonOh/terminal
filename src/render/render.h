@@ -1,5 +1,4 @@
-#include "GL/glew.h"
-#include "GL/gl.h"
+#include "render/opengl.h"
 
 typedef struct {
   int (*init)();
