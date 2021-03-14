@@ -25,9 +25,6 @@ enum LogLevel {
 #define LOG_TIMESTAMP_BUFFER_MAX 50
 #define LOG_BUFFER_MAX 16000
 
-// Print all logs higher than log level
-static unsigned long _loglevel = LOG_ALL;
-
 void set_loglevel(enum LogLevel);
 char *_log_level_name(enum LogLevel);
 void _print_log(enum LogLevel, const char *, va_list);
