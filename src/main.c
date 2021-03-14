@@ -6,7 +6,7 @@
 #include <string.h>
 
 #include "log.h"
-#include "render/render_gl.h"
+#include "render/render.h"
 
 #include <GLFW/glfw3.h>
 

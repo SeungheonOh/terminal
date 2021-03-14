@@ -1,14 +1,19 @@
-#include "render_gl.h"
 #include "log.h"
+#include "render/render.h"
 
-const char *vertexShaderSource =
+/*
+ * source from https://learnopengl.com/
+ * basic test to see if rendering works
+ */
+
+static const char *vertexShaderSource =
     "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "void main()\n"
     "{\n"
     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
     "}\0";
-const char *fragmentShaderSource =
+static const char *fragmentShaderSource =
     "#version 330 core\n"
     "out vec4 FragColor;\n"
     "void main()\n"
@@ -79,7 +84,7 @@ static int init() {
 }
 
 static int draw() {
-  //log_debug("gl render draw for %d time", ++counter);
+  // log_debug("gl render draw for %d time", ++counter);
   glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 
