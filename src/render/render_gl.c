@@ -3,13 +3,13 @@
 
 static int counter;
 
-int init() {
+static int init() {
   counter = 0;
   log_debug("gl render init");
   return 0;
 }
 
-int draw() {
+static int draw() {
   log_debug("gl render draw for %d time", ++counter);
   return 0;
 }

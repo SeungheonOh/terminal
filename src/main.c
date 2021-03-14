@@ -15,5 +15,4 @@ int main() {
   render_gl.draw();
   set_loglevel(LOG_ALL);
   log_info("hello world");
-  sayhello();
 }

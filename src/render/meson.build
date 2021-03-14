@@ -12,7 +12,6 @@ render_dep = [
 ]
 
 render_src = [
-  files('render_test.c'),
   files('render_gl.c'),
 ]
 

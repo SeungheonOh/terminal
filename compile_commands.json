@@ -1,0 +1,146 @@
+[
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_affine.c.o -MF subprojects/cglm/libcglm.so.p/src_affine.c.o.d -o subprojects/cglm/libcglm.so.p/src_affine.c.o -c ../subprojects/cglm/src/affine.c",
+    "file": "../subprojects/cglm/src/affine.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_affine.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_affine2d.c.o -MF subprojects/cglm/libcglm.so.p/src_affine2d.c.o.d -o subprojects/cglm/libcglm.so.p/src_affine2d.c.o -c ../subprojects/cglm/src/affine2d.c",
+    "file": "../subprojects/cglm/src/affine2d.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_affine2d.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_bezier.c.o -MF subprojects/cglm/libcglm.so.p/src_bezier.c.o.d -o subprojects/cglm/libcglm.so.p/src_bezier.c.o -c ../subprojects/cglm/src/bezier.c",
+    "file": "../subprojects/cglm/src/bezier.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_bezier.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_box.c.o -MF subprojects/cglm/libcglm.so.p/src_box.c.o.d -o subprojects/cglm/libcglm.so.p/src_box.c.o -c ../subprojects/cglm/src/box.c",
+    "file": "../subprojects/cglm/src/box.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_box.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_cam.c.o -MF subprojects/cglm/libcglm.so.p/src_cam.c.o.d -o subprojects/cglm/libcglm.so.p/src_cam.c.o -c ../subprojects/cglm/src/cam.c",
+    "file": "../subprojects/cglm/src/cam.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_cam.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_curve.c.o -MF subprojects/cglm/libcglm.so.p/src_curve.c.o.d -o subprojects/cglm/libcglm.so.p/src_curve.c.o -c ../subprojects/cglm/src/curve.c",
+    "file": "../subprojects/cglm/src/curve.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_curve.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_ease.c.o -MF subprojects/cglm/libcglm.so.p/src_ease.c.o.d -o subprojects/cglm/libcglm.so.p/src_ease.c.o -c ../subprojects/cglm/src/ease.c",
+    "file": "../subprojects/cglm/src/ease.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_ease.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_euler.c.o -MF subprojects/cglm/libcglm.so.p/src_euler.c.o.d -o subprojects/cglm/libcglm.so.p/src_euler.c.o -c ../subprojects/cglm/src/euler.c",
+    "file": "../subprojects/cglm/src/euler.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_euler.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_frustum.c.o -MF subprojects/cglm/libcglm.so.p/src_frustum.c.o.d -o subprojects/cglm/libcglm.so.p/src_frustum.c.o -c ../subprojects/cglm/src/frustum.c",
+    "file": "../subprojects/cglm/src/frustum.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_frustum.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_io.c.o -MF subprojects/cglm/libcglm.so.p/src_io.c.o.d -o subprojects/cglm/libcglm.so.p/src_io.c.o -c ../subprojects/cglm/src/io.c",
+    "file": "../subprojects/cglm/src/io.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_io.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_mat2.c.o -MF subprojects/cglm/libcglm.so.p/src_mat2.c.o.d -o subprojects/cglm/libcglm.so.p/src_mat2.c.o -c ../subprojects/cglm/src/mat2.c",
+    "file": "../subprojects/cglm/src/mat2.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_mat2.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_mat3.c.o -MF subprojects/cglm/libcglm.so.p/src_mat3.c.o.d -o subprojects/cglm/libcglm.so.p/src_mat3.c.o -c ../subprojects/cglm/src/mat3.c",
+    "file": "../subprojects/cglm/src/mat3.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_mat3.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_mat4.c.o -MF subprojects/cglm/libcglm.so.p/src_mat4.c.o.d -o subprojects/cglm/libcglm.so.p/src_mat4.c.o -c ../subprojects/cglm/src/mat4.c",
+    "file": "../subprojects/cglm/src/mat4.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_mat4.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_plane.c.o -MF subprojects/cglm/libcglm.so.p/src_plane.c.o.d -o subprojects/cglm/libcglm.so.p/src_plane.c.o -c ../subprojects/cglm/src/plane.c",
+    "file": "../subprojects/cglm/src/plane.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_plane.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_project.c.o -MF subprojects/cglm/libcglm.so.p/src_project.c.o.d -o subprojects/cglm/libcglm.so.p/src_project.c.o -c ../subprojects/cglm/src/project.c",
+    "file": "../subprojects/cglm/src/project.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_project.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_quat.c.o -MF subprojects/cglm/libcglm.so.p/src_quat.c.o.d -o subprojects/cglm/libcglm.so.p/src_quat.c.o -c ../subprojects/cglm/src/quat.c",
+    "file": "../subprojects/cglm/src/quat.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_quat.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_ray.c.o -MF subprojects/cglm/libcglm.so.p/src_ray.c.o.d -o subprojects/cglm/libcglm.so.p/src_ray.c.o -c ../subprojects/cglm/src/ray.c",
+    "file": "../subprojects/cglm/src/ray.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_ray.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_sphere.c.o -MF subprojects/cglm/libcglm.so.p/src_sphere.c.o.d -o subprojects/cglm/libcglm.so.p/src_sphere.c.o -c ../subprojects/cglm/src/sphere.c",
+    "file": "../subprojects/cglm/src/sphere.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_sphere.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_vec2.c.o -MF subprojects/cglm/libcglm.so.p/src_vec2.c.o.d -o subprojects/cglm/libcglm.so.p/src_vec2.c.o -c ../subprojects/cglm/src/vec2.c",
+    "file": "../subprojects/cglm/src/vec2.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_vec2.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_vec3.c.o -MF subprojects/cglm/libcglm.so.p/src_vec3.c.o.d -o subprojects/cglm/libcglm.so.p/src_vec3.c.o -c ../subprojects/cglm/src/vec3.c",
+    "file": "../subprojects/cglm/src/vec3.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_vec3.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isubprojects/cglm/libcglm.so.p -Isubprojects/cglm -I../subprojects/cglm -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -g -fPIC -MD -MQ subprojects/cglm/libcglm.so.p/src_vec4.c.o -MF subprojects/cglm/libcglm.so.p/src_vec4.c.o.d -o subprojects/cglm/libcglm.so.p/src_vec4.c.o -c ../subprojects/cglm/src/vec4.c",
+    "file": "../subprojects/cglm/src/vec4.c",
+    "output": "subprojects/cglm/libcglm.so.p/src_vec4.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isrc/term.p -Isrc -I../src -Isubprojects -I../subprojects -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -g -MD -MQ src/term.p/main.c.o -MF src/term.p/main.c.o.d -o src/term.p/main.c.o -c ../src/main.c",
+    "file": "../src/main.c",
+    "output": "src/term.p/main.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isrc/term.p -Isrc -I../src -Isubprojects -I../subprojects -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -g -MD -MQ src/term.p/log.c.o -MF src/term.p/log.c.o.d -o src/term.p/log.c.o -c ../src/log.c",
+    "file": "../src/log.c",
+    "output": "src/term.p/log.c.o"
+  },
+  {
+    "directory": "/home/seungheonoh/Documents/Terminal/build",
+    "command": "cc -Isrc/term.p -Isrc -I../src -Isubprojects -I../subprojects -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -g -MD -MQ src/term.p/render_render_test.c.o -MF src/term.p/render_render_test.c.o.d -o src/term.p/render_render_test.c.o -c ../src/render/render_test.c",
+    "file": "../src/render/render_test.c",
+    "output": "src/term.p/render_render_test.c.o"
+  }
+]
