@@ -23,7 +23,7 @@ int main() {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-  GLFWwindow *window = glfwCreateWindow(500, 500, "LearnOpenGL", NULL, NULL);
+  GLFWwindow *window = glfwCreateWindow(500, 500, "Terminal", NULL, NULL);
   if (window == NULL) {
     log_error("failed to create glfw window");
     glfwTerminate();
