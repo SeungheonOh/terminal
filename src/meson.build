@@ -27,20 +27,7 @@ deps = [
   #subdir
   render_dep,
 
-  # freetype-gl; need to add dependencies here because cmake
-  #dependency('glew'),
-  #dependency('fontconfig'),
-  #dependency('freetype2'),
-  #dependency('harfbuzz'),
-  #freetypegl_deps,
-
-  # cglm
-  #cglm_deps,
-
-  #dependency('glew'),
-  #dependency('fontconfig'),
-  #dependency('freetype2'),  
-  #dependency('glfw3', fallback: ['glfw']),
+  dependency('glfw3', fallback: ['glfw']),
 ]
 
 inc = [

@@ -1,5 +1,7 @@
 #include "log.h"
 
+extern unsigned long _loglevel;
+
 void set_loglevel(enum LogLevel ll) { _loglevel = ll; }
 
 // Simple enum to string
