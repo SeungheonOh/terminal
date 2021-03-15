@@ -21,7 +21,6 @@ char *match_font_desc(char *desc) {
   FcResult result;
 
   FcPattern *fontm = FcFontMatch(config, pat, &result);
-
   if (fontm) {
     FcValue val;
     if (FcPatternGet(fontm, FC_FILE, 0, &val)) {
