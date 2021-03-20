@@ -43,26 +43,36 @@ GLuint shader_compile(const char *shader_source, GLuint type) {
   glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
   if (!success) {
     glGetShaderInfoLog(shader, 512, NULL, info);
-    log_error("shader compilation failed: %s", info);
-    exit(EXIT_FAILURE);
+    log_error("shader compilation failed: \n%s", info);
+    return -1;
   }
   return shader;
 }
 
 GLuint shader_load(const char *vert, const char *frag) {
+  if (!vert || !strlen(vert) || !frag || !strlen(frag)) {
+    log_error("invalid shader strings");
+    exit(EXIT_FAILURE);
+  }
   int success;
   char info[512];
   GLuint shaderprog = glCreateProgram();
-  if (vert && strlen(vert)) {
-    GLuint vertshader = shader_compile(vert, GL_VERTEX_SHADER);
-    glAttachShader(shaderprog, vertshader);
-    glDeleteShader(vertshader);
+
+  GLuint vertshader = shader_compile(vert, GL_VERTEX_SHADER);
+  if (vertshader == -1) {
+    log_error("Failed to load vertex shader");
+    exit(EXIT_FAILURE);
   }
-  if (frag && strlen(frag)) {
-    GLuint fragshader = shader_compile(frag, GL_FRAGMENT_SHADER);
-    glAttachShader(shaderprog, fragshader);
-    glDeleteShader(fragshader);
+  glAttachShader(shaderprog, vertshader);
+  glDeleteShader(vertshader);
+
+  GLuint fragshader = shader_compile(frag, GL_FRAGMENT_SHADER);
+  if (fragshader == -1) {
+    log_error("Failed to load fragment shader");
+    exit(EXIT_FAILURE);
   }
+  glAttachShader(shaderprog, fragshader);
+  glDeleteShader(fragshader);
 
   glLinkProgram(shaderprog);
 
