@@ -9,6 +9,7 @@ render_dep = [
   font_dep,
 
   dependency('glew'),
+  dependency('opengl'),
 ]
 
 render_src = [
