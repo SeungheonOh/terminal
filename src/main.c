@@ -33,11 +33,14 @@ int main() {
   glfwSwapInterval(1);
   glfwSetKeyCallback(window, test_input_cb);
 
+  glewExperimental = 1;
   GLenum err = glewInit();
   if (GLEW_OK != err) {
     // Problem: glewInit failed, something is seriously wrong.
-    fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+    log_error("GLEW: %s", glewGetErrorString(err));
+    /*
     exit(EXIT_FAILURE);
+    */
   }
   fprintf(stderr, "Using GLEW %s\n", glewGetString(GLEW_VERSION));
 

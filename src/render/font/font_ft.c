@@ -3,39 +3,37 @@
 
 #include "render/opengl.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "render/font/stb_image.h"
-
 unsigned int fttest() {
   int err;
   FT_Library lib;
   FT_Face face;
   FT_Init_FreeType(&lib);
-  char *ffile = match_font_desc("IBM Plex");
+  char *ffile = match_font_desc("DejaVu Sans Mono");
+  if (!ffile)
+    return -1;
+  log_info("%s", ffile);
   err = FT_New_Face(lib, ffile, 0, &face);
   if (err) {
     log_error("err load");
   }
-  log_info("%s", ffile);
   log_info("face color: %d", FT_HAS_COLOR(face));
   free(ffile);
 
-  /*
-  FT_Set_Char_Size(face,    // handle to face object
-                   0,       // char_width in 1/64th of points
-                   16 * 64, // char_height in 1/64th of points
-                   300,     // horizontal device resolution
-                   300);
-                   */
-
-  err = FT_Set_Pixel_Sizes(face, // handle to face object
-                           0,    // pixel_width
-                           48);  // pixel_height
+  err = FT_Set_Char_Size(face,    // handle to face object
+                         0,       // char_width in 1/64th of points
+                         16 * 64, // char_height in 1/64th of points
+                         300,     // horizontal device resolution
+                         300);    // vertical device resolution
   if (err) {
     log_error("err size");
   }
 
-  FT_UInt gindex = FT_Get_Char_Index(face, '5');
+  log_info("global metrics:\n max advance: %d\n max height: %d",
+           face->size->metrics.max_advance >> 6,
+           face->size->metrics.height >> 6);
+  log_info("number of glyphs: %d", face->num_glyphs);
+
+  FT_UInt gindex = FT_Get_Char_Index(face, 'A');
   err = FT_Load_Glyph(face, gindex, FT_LOAD_DEFAULT | FT_LOAD_COLOR);
   if (err) {
     log_error("err glyph");
@@ -47,20 +45,12 @@ unsigned int fttest() {
 
   FT_GlyphSlot glyph = face->glyph;
 
+  log_info("glyph metrics:\n advance: %d\n height: %d",
+           glyph->metrics.horiAdvance >> 6, face->size->metrics.height >> 6);
+
   log_info("bitmap loaded: %d, %d", face->glyph->bitmap.rows,
            face->glyph->bitmap.width);
-  log_info("color bitmap?: %d", glyph->bitmap.pixel_mode == FT_PIXEL_MODE_LCD);
-  /*
-  for (int i = 0; i < glyph->bitmap.rows; i++) {
-    for (int j = 0; j < glyph->bitmap.width; j++) {
-      if (glyph->bitmap.buffer[j + i * glyph->bitmap.width])
-        printf("*");
-      else
-        printf(" ");
-    }
-    printf("\n");
-  }
-  */
+  log_info("color bitmap?: %d", glyph->bitmap.pixel_mode);
 
   unsigned int texture;
 
@@ -71,10 +61,8 @@ unsigned int fttest() {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   log_info("loaded image");
-  // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
-  //             GL_UNSIGNED_BYTE, data);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, glyph->bitmap.width,
-               glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE,
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, glyph->bitmap.width / 3,
+               glyph->bitmap.rows, 0, GL_RGB, GL_UNSIGNED_BYTE,
                glyph->bitmap.buffer);
 
   glGenerateMipmap(GL_TEXTURE_2D);

@@ -22,12 +22,12 @@ char *match_font_desc(char *desc) {
 
   FcPattern *fontm = FcFontMatch(config, pat, &result);
   if (fontm) {
-    FcValue val;
-    if (FcPatternGet(fontm, FC_FILE, 0, &val)) {
+    FcChar8 *val;
+    if (FcPatternGetString(fontm, FC_FILE, 0, &val)) {
       log_error("failed to load font from \"%s\"", desc);
       return 0;
     }
-    font = strdup((char *)(val.u.s));
+    font = strdup((char *)(val));
   } else {
     log_error("failed to load font from \"%s\"", desc);
     return 0;

@@ -1,5 +1,6 @@
 #include "render/opengl.h"
 
+// TODO Need better interface
 typedef struct {
   int (*init)();
   int (*draw)();
