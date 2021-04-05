@@ -1,4 +1,4 @@
-#include "render/opengl.h"
+#include "opengl.h"
 
 // TODO Need better interface
 typedef struct {

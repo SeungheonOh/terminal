@@ -1,6 +1,6 @@
 #include "log.h"
 
-static unsigned long _loglevel;
+static unsigned long _loglevel = LOG_ALL;
 
 void set_loglevel(enum LogLevel ll) { _loglevel = ll; }
 
