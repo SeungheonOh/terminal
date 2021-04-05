@@ -1,5 +1,6 @@
 cc = meson.get_compiler('c')
 subdir('render')
+subdir('util')
 
 # You need linkder for linux
 if host_machine.system() == 'linux'
@@ -13,19 +14,25 @@ deps = [
   dl_dep,
   cc.find_library('m', required: true),
 
+  dependency('glfw3', fallback: ['glfw']),
+
   #subdir
   render_dep,
-
-  dependency('glfw3', fallback: ['glfw']),
+  util_dep
 ]
 
 inc = [
   include_directories('.'),
   include_directories('../subprojects'),
+
+  render_inc,
+  util_inc,
 ]
 
 src = [
   files('main.c'),
   files('log.c'),
+
   render_src,
+  util_src,
 ]
