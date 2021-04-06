@@ -41,6 +41,7 @@ void list_remove(list *l, unsigned int indx) {
     iter->next = iter->next->next;
     free(tmp);
   }
+  l->size--;
   return;
 }
 void *list_at(list *l, unsigned int indx) {
