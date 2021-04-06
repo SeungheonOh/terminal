@@ -22,10 +22,10 @@ void list_add(list *l, void *d) {
 
   if (l->head == NULL) {
     l->head = l->tail = n;
-    return;
+  } else {
+    l->tail = l->tail->next = n;
+    l->size++;
   }
-  l->tail = l->tail->next = n;
-  l->size++;
   return;
 };
 void list_remove(list *l, unsigned int indx) {
