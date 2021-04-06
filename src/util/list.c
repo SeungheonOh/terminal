@@ -27,7 +27,7 @@ void list_add(list *l, void *d) {
     l->size++;
   }
   return;
-};
+}
 void list_remove(list *l, unsigned int indx) {
   if (l == NULL || list_size(l) <= indx)
     return;
@@ -56,7 +56,7 @@ void *list_at(list *l, unsigned int indx) {
     iter = iter->next;
   return iter->data;
 }
-int list_size(list *l) { return (l == NULL) ? -1 : l->size; };
+int list_size(list *l) { return (l == NULL) ? -1 : l->size; }
 node *list_iter(list *l) { return (l == NULL) ? NULL : l->head; }
 void list_deinit(list *l) {
   if (l == NULL)
