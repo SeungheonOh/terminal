@@ -3,6 +3,8 @@
 
 list *list_init() {
   list *n = malloc(sizeof(list));
+  if (n == NULL)
+    return NULL;
   n->size = 0;
   n->head = NULL;
   n->tail = NULL;
@@ -12,8 +14,9 @@ void list_add(list *l, void *d) {
   if (l == NULL)
     return;
 
-  l->size++;
   node *n = malloc(sizeof(node));
+  if (n == NULL)
+    return;
   n->data = d;
   n->next = NULL;
 
@@ -22,6 +25,7 @@ void list_add(list *l, void *d) {
     return;
   }
   l->tail = l->tail->next = n;
+  l->size++;
   return;
 };
 void list_remove(list *l, unsigned int indx) {
@@ -45,14 +49,18 @@ void list_remove(list *l, unsigned int indx) {
   return;
 }
 void *list_at(list *l, unsigned int indx) {
+  if (l == NULL)
+    return NULL;
   node *iter = l->head;
   while (indx-- > 0 && iter != NULL)
     iter = iter->next;
   return iter->data;
 }
-int list_size(list *l) { return l->size; };
-node *list_iter(list *l) { return l->head; }
+int list_size(list *l) { return (l == NULL) ? -1 : l->size; };
+node *list_iter(list *l) { return (l == NULL) ? NULL : l->head; }
 void list_deinit(list *l) {
+  if (l == NULL)
+    return;
   node *iter = l->head;
   node *tmp;
   while (iter != NULL) {
